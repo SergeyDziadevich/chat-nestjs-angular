@@ -1,5 +1,5 @@
 # Stage 1 build
-FROM node:16.17.0 AS development
+FROM node:18.10.0 AS development
 
 WORKDIR /dweb/frontend/src/app
 
