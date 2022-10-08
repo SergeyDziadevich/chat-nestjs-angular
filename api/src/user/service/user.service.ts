@@ -3,27 +3,27 @@ import { IUser } from '../model/user.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../model/user.entity';
 import { Repository } from 'typeorm';
-import { from, map, mapTo, Observable, of, switchMap } from 'rxjs';
-import * as bcrypt from 'bcryptjs';
+import { from, map, Observable, switchMap } from 'rxjs';
 import {
   IPaginationOptions,
   paginate,
   Pagination,
 } from 'nestjs-typeorm-paginate';
-import { matches } from 'class-validator';
+import { AuthService } from '../../auth/service/auth.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    private authService: AuthService,
   ) {}
 
   create(newUser: IUser): Observable<IUser> {
     return this.emailExists(newUser.email).pipe(
       switchMap((userExists: boolean) => {
         if (!userExists) {
-          return from(this.hashPassword(newUser.password)).pipe(
+          return this.hashPassword(newUser.password).pipe(
             switchMap((passwordHash: string) => {
               newUser.password = passwordHash;
               return from(this.userRepository.save(newUser)).pipe(
@@ -42,15 +42,18 @@ export class UserService {
     return from(paginate<UserEntity>(this.userRepository, options));
   }
 
-  // TODO: change to JWT
-  login(user: IUser): Observable<boolean> {
+  login(user: IUser): Observable<string> {
     return this.findByEmail(user.email).pipe(
       switchMap((foundUser: IUser) => {
         if (foundUser) {
           return this.validatePassword(user.password, foundUser.password).pipe(
             switchMap((matches: boolean) => {
               if (matches) {
-                return of(true);
+                return from(this.findOne(foundUser.id)).pipe(
+                  switchMap((user: IUser) =>
+                    this.authService.generateJwt(user),
+                  ),
+                );
               } else {
                 throw new HttpException(
                   'Login was not succesfull, wrong credentials',
@@ -64,13 +67,6 @@ export class UserService {
         }
       }),
     );
-  }
-
-  private validatePassword(
-    password: string,
-    storedPassword: string,
-  ): Observable<boolean> {
-    return from(bcrypt.compare(password, storedPassword) as Promise<boolean>);
   }
 
   // also return the password
@@ -89,8 +85,15 @@ export class UserService {
     });
   }
 
-  private async hashPassword(password: string): Promise<string> {
-    return await bcrypt.hash(password, 12);
+  private validatePassword(
+    password: string,
+    storedPassword: string,
+  ): Observable<boolean> {
+    return this.authService.comparePassword(password, storedPassword);
+  }
+
+  private hashPassword(password: string): Observable<string> {
+    return this.authService.hashPassword(password);
   }
 
   private emailExists(email: string): Observable<boolean> {
