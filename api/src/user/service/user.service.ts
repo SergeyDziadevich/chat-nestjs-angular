@@ -69,6 +69,12 @@ export class UserService {
     );
   }
 
+  getOne(id: number): Promise<IUser> {
+    return this.userRepository.findOneOrFail({
+      where: { id },
+    });
+  }
+
   // also return the password
   private findByEmail(email: string): Observable<IUser> {
     return from(
