@@ -22,4 +22,8 @@ export class AuthService {
   ): Observable<boolean> {
     return from(bcrypt.compare(password, storedPassword) as Promise<boolean>);
   }
+
+  verifyJwt(jwt: string): Promise<any> {
+    return this.jwtService.verifyAsync(jwt);
+  }
 }
