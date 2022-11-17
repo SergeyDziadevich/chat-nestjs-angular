@@ -7,10 +7,13 @@ import { JwtModule } from "@auth0/angular-jwt";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 export function tokenGetter() {
-  return localStorage.getItem('nestjs_chat_app');
+  return localStorage.getItem('nestjs_chat_app') || '';
 }
+
+
 
 @NgModule({
   declarations: [
@@ -25,7 +28,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:3000  ']
+        allowedDomains: ['localhost:3000']
       }
     })
   ],
