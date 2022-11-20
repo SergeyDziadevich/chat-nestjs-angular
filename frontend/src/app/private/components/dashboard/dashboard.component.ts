@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs";
+
+import { IRoomPaginate } from '../../../model/room.interface';
 import { ChatService } from "../../services/chat-service/chat.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-  message$: Observable<unknown> = this.chatService.getMessage();
+export class DashboardComponent implements OnInit {
+
+  rooms$: Observable<IRoomPaginate> = this.chatService.getMyRooms();
 
   constructor(private chatService: ChatService) { }
 
-
+  ngOnInit(): void {
+    this.chatService.createRoom();
+  }
 }
+
