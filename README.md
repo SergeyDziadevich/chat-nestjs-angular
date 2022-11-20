@@ -19,3 +19,6 @@ Command to remove all images:
 
 Command to remove all containers:  
 `docker rm -vf $(docker ps -a -q)`
+
+
+<img src="https://miro.medium.com/max/1400/0*cnYB3CS5YfQ4GtSD.jpg" width="800" alt="Nest Logo" />

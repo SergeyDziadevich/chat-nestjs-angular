@@ -12,6 +12,7 @@ import { UserService } from '../../user/service/user.service';
 import { UnauthorizedException } from '@nestjs/common';
 import { RoomService } from '../services/room-service/room/room.service';
 import { IRoom } from '../model/room.interface';
+import { IPage } from '../model/page.interface';
 
 @WebSocketGateway({
   cors: {
@@ -55,6 +56,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
           limit: 10,
         });
 
+        // substract page -1 to match front mat pagination
+        rooms.meta.currentPage = rooms.meta.currentPage - 1;
+
         // Only emit rooms for specific connected client
         return this.server.to(socket.id).emit('rooms', rooms);
       }
@@ -87,5 +91,21 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     return this.roomService.createRoom(room, socket.data.user);
+  }
+
+  @SubscribeMessage('paginateRooms')
+  async onPaginateRoom(socket: Socket, page: IPage) {
+    page.limit = page.limit > 100 ? 100 : page.limit;
+    // add page to match material paginator
+    page.page = page.page + 1;
+
+    const rooms = await this.roomService.getRoomsForUser(
+      socket.data.user.id,
+      page,
+    );
+    // substract page -1 to match front mat pagination
+    rooms.meta.currentPage = rooms.meta.currentPage - 1;
+
+    return this.server.to(socket.id).emit('rooms', rooms);
   }
 }
