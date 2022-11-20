@@ -4,7 +4,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable, tap } from "rxjs";
 
 import { IUser } from "../../model/user.interface";
-import { ILoginResponse } from "../../model/ login-response";
+import { ILoginResponse } from "../../model/login-response";
 
 
 @Injectable({

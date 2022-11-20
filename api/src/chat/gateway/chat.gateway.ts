@@ -10,6 +10,8 @@ import { AuthService } from '../../auth/service/auth.service';
 import { IUser } from '../../user/model/user.interface';
 import { UserService } from '../../user/service/user.service';
 import { UnauthorizedException } from '@nestjs/common';
+import { RoomService } from '../services/room-service/room/room.service';
+import { IRoom } from '../model/room.interface';
 
 @WebSocketGateway({
   cors: {
@@ -24,38 +26,41 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
-  title: string[] = [];
-
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private roomService: RoomService,
   ) {}
 
-  @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    this.server.emit('message', 'test');
-    return 'Hello world!';
-  }
-
   async handleConnection(socket: Socket) {
+    console.log('handle connection');
+
     try {
       const decodedToken = await this.authService.verifyJwt(
         socket.handshake.headers.authorization,
       );
       const user: IUser = await this.userService.getOne(decodedToken.user.id);
 
+      console.log('handle connection user: ', user);
+
       if (!user) {
+        console.log('no user!!!');
         return this.disconnect(socket);
       } else {
-        this.title.push('Value ' + Math.random().toString());
-        this.server.emit('message', this.title);
+        console.log('user: ', user);
+        socket.data.user = user;
+
+        const rooms = await this.roomService.getRoomsForUser(user.id, {
+          page: 1,
+          limit: 10,
+        });
+
+        // Only emit rooms for specific connected client
+        return this.server.to(socket.id).emit('rooms', rooms);
       }
     } catch {
       return this.disconnect(socket);
     }
-    //
-    // console.log('on Connect');
-    // this.server.emit('message', 'test connect');
   }
 
   handleDisconnect(socket: Socket): any {
@@ -65,5 +70,22 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private disconnect(socket: Socket) {
     socket.emit('Error ', new UnauthorizedException());
     socket.disconnect();
+  }
+
+  @SubscribeMessage('createRoom')
+  async onCreateRoom(socket: Socket, room: IRoom): Promise<IRoom> {
+    console.log('from createRoom creator :  ', socket.data.user);
+
+    // TODO: why  undefined ??
+    if (!socket.data.user) {
+      console.log('!!! socket.data.user: ', socket.data.user);
+      socket.data.user = {
+        id: 2,
+        username: 'username',
+        email: 'info-new@dweb.by',
+      };
+    }
+
+    return this.roomService.createRoom(room, socket.data.user);
   }
 }

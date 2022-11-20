@@ -15,7 +15,7 @@ services:
       - /dweb/src/app/node_modules/
     # RUN in debug mode: npm run start:debug --> Also start debugger
     # RUN in dev mode: npm run:dev
-    command: npm run start:debug
+    command: npm run start:dev
     depends_on:
       - postgres
     environment:
