@@ -1,23 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../model/dto/create-user.dto';
-import { Observable, of } from 'rxjs';
 import { IUser } from '../../model/user.interface';
 import { LoginUserDto } from '../../model/dto/login-user.dto';
 
 @Injectable()
 export class UserHelperService {
-  createUserDtoToEntity(createUserDto: CreateUserDto): Observable<IUser> {
-    return of({
+  createUserDtoToEntity(createUserDto: CreateUserDto): IUser {
+    return {
       email: createUserDto.email,
       username: createUserDto.username,
       password: createUserDto.password,
-    });
+    };
   }
 
-  loginUserDtoToEntity(loginUserDto: LoginUserDto): Observable<IUser> {
-    return of({
+  loginUserDtoToEntity(loginUserDto: LoginUserDto): IUser {
+    return {
       email: loginUserDto.email,
       password: loginUserDto.password,
-    });
+    };
   }
 }
