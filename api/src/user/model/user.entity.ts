@@ -1,5 +1,6 @@
 import {
   BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   ManyToMany,
@@ -25,7 +26,9 @@ export class UserEntity {
   rooms: RoomEntity[];
 
   @BeforeInsert()
+  @BeforeUpdate()
   emailToLowerCase() {
     this.email = this.email.toLowerCase();
+    this.username = this.username.toLowerCase();
   }
 }
