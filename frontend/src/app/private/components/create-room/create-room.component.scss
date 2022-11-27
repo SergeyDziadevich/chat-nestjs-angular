@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  min-width: 350px;
+
+  .dashboard    {
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .mat-form-field {
+      width: 100%;
+      min-width: 300px;
+    }
+
+    .button {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
