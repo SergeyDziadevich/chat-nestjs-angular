@@ -18,6 +18,12 @@
               <input type="text" matInput placeholder="Description" formControlName="description">
             </mat-form-field>
 
+            <app-select-users
+              [users]="users.value"
+              (addUser)="addUser(initUser($event))"
+              (removeUser)="removeUser($event.id)"
+            ></app-select-users>
+
             <mat-hint *ngIf="!form.valid"><small>Please fill out all needed information</small></mat-hint>
 
             <div class="button">

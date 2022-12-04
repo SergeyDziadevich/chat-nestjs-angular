@@ -14,11 +14,13 @@ import { MatIconModule } from "@angular/material/icon";
 import { PrivateRoutingModule } from './private-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CreateRoomComponent } from './components/create-room/create-room.component';
+import { SelectUsersComponent } from "./components/select-users/select-users.component";
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    CreateRoomComponent
+    CreateRoomComponent,
+    SelectUsersComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,7 @@ import { CreateRoomComponent } from './components/create-room/create-room.compon
     MatInputModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatIconModule
+    MatIconModule,
   ]
 })
 export class PrivateModule { }

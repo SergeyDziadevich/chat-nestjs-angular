@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import {IUser} from "../../model/user.interface";
-import {catchError, Observable, tap, throwError} from "rxjs";
+import { IUser } from "../../model/user.interface";
+import { catchError, Observable, tap, throwError } from "rxjs";
 
 @Injectable({
   providedIn: 'root'

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 import { CustomSocket } from "../../sockets/custom-socket";
-import {IRoom, IRoomPaginate} from "../../../model/room.interface";
-import {Observable} from "rxjs";
+import { IRoom, IRoomPaginate } from "../../../model/room.interface";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class  ChatService {
     return this.socket.fromEvent('message')
   }
 
-  getMyRooms(): Observable<IRoomPaginate  > {
+  getMyRooms(): Observable<IRoomPaginate> {
     return this.socket.fromEvent<IRoomPaginate>('rooms')
   }
 
