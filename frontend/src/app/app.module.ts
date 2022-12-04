@@ -7,17 +7,14 @@ import { JwtModule } from "@auth0/angular-jwt";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 export function tokenGetter() {
   return localStorage.getItem('nestjs_chat_app') || '';
 }
 
-
-
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
