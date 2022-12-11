@@ -9,7 +9,11 @@ import { Server, Socket } from 'socket.io';
 import { AuthService } from '../../auth/service/auth.service';
 import { IUser } from '../../user/model/user.interface';
 import { UserService } from '../../user/service/user.service';
-import { UnauthorizedException } from '@nestjs/common';
+import {
+  OnModuleDestroy,
+  OnModuleInit,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { RoomService } from '../services/room-service/room.service';
 import { IRoom } from '../model/room.interface';
 import { IPage } from '../model/page.interface';
@@ -25,7 +29,9 @@ import { IConnectedUser } from '../model/connected-user.interface';
     ],
   },
 })
-export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class ChatGateway
+  implements OnGatewayConnection, OnGatewayDisconnect, OnModuleInit
+{
   @WebSocketServer()
   server: Server;
 
@@ -35,6 +41,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private roomService: RoomService,
     private connectedUserService: ConnectedUserService,
   ) {}
+
+  async onModuleInit() {
+    await this.connectedUserService.deleteAll();
+  }
 
   async handleConnection(socket: Socket) {
     console.log('handle connection');
