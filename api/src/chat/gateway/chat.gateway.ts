@@ -10,9 +10,11 @@ import { AuthService } from '../../auth/service/auth.service';
 import { IUser } from '../../user/model/user.interface';
 import { UserService } from '../../user/service/user.service';
 import { UnauthorizedException } from '@nestjs/common';
-import { RoomService } from '../services/room-service/room/room.service';
+import { RoomService } from '../services/room-service/room.service';
 import { IRoom } from '../model/room.interface';
 import { IPage } from '../model/page.interface';
+import { ConnectedUserService } from '../services/connected-user/connected-user.service';
+import { IConnectedUser } from '../model/connected-user.interface';
 
 @WebSocketGateway({
   cors: {
@@ -31,6 +33,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private authService: AuthService,
     private userService: UserService,
     private roomService: RoomService,
+    private connectedUserService: ConnectedUserService,
   ) {}
 
   async handleConnection(socket: Socket) {
@@ -59,6 +62,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         // substract page -1 to match front mat pagination
         rooms.meta.currentPage = rooms.meta.currentPage - 1;
 
+        // Save connection to DB
+        await this.connectedUserService.create({ socketId: socket.id, user });
+
         // Only emit rooms for specific connected client
         return this.server.to(socket.id).emit('rooms', rooms);
       }
@@ -67,7 +73,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   }
 
-  handleDisconnect(socket: Socket): any {
+  async handleDisconnect(socket: Socket): Promise<void> {
+    // remove connection from DB
+    await this.connectedUserService.deleteBySocketId(socket.id);
+
     this.disconnect(socket);
   }
 
@@ -79,6 +88,24 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage('createRoom')
   async onCreateRoom(socket: Socket, room: IRoom): Promise<IRoom> {
     console.log('from createRoom creator :  ', socket.data.user);
+
+    const createdRoom: IRoom = await this.roomService.createRoom(
+      room,
+      socket.data.user,
+    );
+
+    for (const user of createdRoom.users) {
+      const connections: IConnectedUser[] =
+        await this.connectedUserService.findByUser(user);
+      const rooms = await this.roomService.getRoomsForUser(user.id, {
+        page: 1,
+        limit: 10,
+      });
+
+      for (const connection of connections) {
+        this.server.to(connection.socketId).emit('rooms', rooms);
+      }
+    }
 
     // TODO: why  undefined ??
     if (!socket.data.user) {
