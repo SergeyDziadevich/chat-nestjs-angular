@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RoomEntity } from '../../../model/room.entity';
+import { RoomEntity } from '../../model/room.entity';
 import { Repository } from 'typeorm';
-import { IRoom } from '../../../model/room.interface';
-import { IUser } from '../../../../user/model/user.interface';
+import { IRoom } from '../../model/room.interface';
+import { IUser } from '../../../user/model/user.interface';
 import {
   IPaginationOptions,
   paginate,
