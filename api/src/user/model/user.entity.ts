@@ -4,9 +4,11 @@ import {
   Column,
   Entity,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { RoomEntity } from '../../chat/model/room.entity';
+import { ConnectedUserEntity } from '../../chat/model/connected-user.entity';
 
 @Entity()
 export class UserEntity {
@@ -24,6 +26,9 @@ export class UserEntity {
 
   @ManyToMany(() => RoomEntity, (room) => room.users)
   rooms: RoomEntity[];
+
+  @OneToMany(() => ConnectedUserEntity, (connection) => connection.user)
+  connections: ConnectedUserEntity[];
 
   @BeforeInsert()
   @BeforeUpdate()
