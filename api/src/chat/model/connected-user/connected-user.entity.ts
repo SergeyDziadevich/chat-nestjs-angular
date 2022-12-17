@@ -5,7 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { UserEntity } from '../../user/model/user.entity';
+import { UserEntity } from '../../../user/model/user.entity';
 
 @Entity()
 export class ConnectedUserEntity {
