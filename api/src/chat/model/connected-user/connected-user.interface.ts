@@ -1,4 +1,4 @@
-import { IUser } from '../../user/model/user.interface';
+import { IUser } from '../../../user/model/user.interface';
 
 export interface IConnectedUser {
   id?: number;

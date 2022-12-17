@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ConnectedUserEntity } from '../../model/connected-user.entity';
 import { Repository } from 'typeorm';
-import { IConnectedUser } from '../../model/connected-user.interface';
+
+import { ConnectedUserEntity } from '../../model/connected-user/connected-user.entity';
+import { IConnectedUser } from '../../model/connected-user/connected-user.interface';
 import { IUser } from 'src/user/model/user.interface';
 
 @Injectable()
