@@ -1,0 +1,40 @@
+<div *ngIf="chatRoom; else noChatRoomSelected">
+  <div style="height: 90px;">
+    <span style="display: flex; flex-direction: row; align-items: center; justify-content: space-between">
+      <h2>{{chatRoom.name}}</h2>
+      <span style="display: flex; flex-direction: row; align-items: center">
+        <mat-icon>event</mat-icon>
+        <span style="margin-left: 10px">{{chatRoom.updated_at | date}}</span>
+      </span>
+    </span>
+    <span>
+      <h3 style="color: grey">{{chatRoom.description}}</h3>
+      <span *ngFor="let user of chatRoom.users; last as isLast">
+        {{user.username}}<ng-container *ngIf="!isLast">,</ng-container></span>
+    </span>
+  </div>
+</div>
+
+<div class="messages-container">
+  <span *ngFor="let message of (messages$ | async)?.items">
+    <app-chat-message [message]="message"></app-chat-message>
+  </span>
+</div>
+
+<!-- Add Message -->
+<div style="position: absolute; bottom: 0; display: flex; flex-direction: row; align-items: center">
+  <mat-form-field style="width: 350px">
+    <input matInput [formControl]="chatMessage" type="type">
+  </mat-form-field>
+  <button mat-button [disabled]="!chatMessage.valid" (click)="sendMessage()">
+    <span style="display: flex; flex-direction: row; align-items:  center;">
+      <mat-icon style="margin-left: 20px">send</mat-icon>
+      <p style="margin-left: 10px">Send</p>
+    </span>
+  </button>
+</div>
+
+
+<ng-template #noChatRoomSelected>
+  <mat-error>No Chatroom Selected</mat-error>
+</ng-template>
