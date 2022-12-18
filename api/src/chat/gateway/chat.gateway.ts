@@ -57,10 +57,8 @@ export class ChatGateway
       const user: IUser = await this.userService.getOne(decodedToken.user.id);
 
       if (!user) {
-        console.log('no user!!!');
         return this.disconnect(socket);
       } else {
-        console.log('user: ', user);
         socket.data.user = user;
 
         const rooms = await this.roomService.getRoomsForUser(user.id, {
