@@ -1,24 +1,15 @@
-.container {
-  display: flex;
-  justify-content: center;
+h3 {
+  padding: 0;
+  padding-top: -10px;
+  margin: 0 ;
+}
 
-  mat-card {
-    position: fixed;
-    margin: 20px;
-
-    .rooms {
-      height: 500px;
-      width: 250px;
-      overflow: auto;
-      scrollbar-color: lightgrey darkgrey;
-      scrollbar-width: thin;
-    }
-  }
-
-  .chatroom {
-    margin-left: 40px;
-    width: 600px;
-  }
+.messages-container {
+  background-color: #e3e0e0;
+  height: 400px;
+  overflow: auto;
+  scrollbar-color: lightgrey darkgrey;
+  scrollbar-width: thin;
 }
 
 ::-webkit-scrollbar-track {

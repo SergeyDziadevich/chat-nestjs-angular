@@ -15,12 +15,16 @@ import { PrivateRoutingModule } from './private-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CreateRoomComponent } from './components/create-room/create-room.component';
 import { SelectUsersComponent } from "./components/select-users/select-users.component";
+import { ChatRoomComponent } from './components/chat-room/chat-room.component';
+import { ChatMessageComponent } from './components/chat-message/chat-message.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     CreateRoomComponent,
-    SelectUsersComponent
+    SelectUsersComponent,
+    ChatRoomComponent,
+    ChatMessageComponent
   ],
   imports: [
     CommonModule,
