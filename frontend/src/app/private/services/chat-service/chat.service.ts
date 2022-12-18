@@ -4,6 +4,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { CustomSocket } from "../../sockets/custom-socket";
 import { IRoom, IRoomPaginate } from "../../../model/room.interface";
 import { Observable } from "rxjs";
+import { IMessage, IMessagePaginate } from "../../../model/message.interace";
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,20 @@ export class  ChatService {
 
   constructor(private socket: CustomSocket, private snackbar: MatSnackBar) { }
 
-  sentMessage() {
-
+  sentMessage(message: IMessage) {
+    this.socket.emit('addMessage', message)
   }
 
-  getMessage() {
-    return this.socket.fromEvent('message')
+  getMessages(): Observable<IMessagePaginate> {
+    return this.socket.fromEvent<IMessagePaginate>('messages')
+  }
+
+  joinRoom(room: IRoom) {
+    this.socket.emit('joinRoom', room)
+  }
+
+  leaveRoom(room: IRoom) {
+    this.socket.emit('leaveRoom', room )
   }
 
   getMyRooms(): Observable<IRoomPaginate> {
@@ -34,3 +43,4 @@ export class  ChatService {
     this.socket.emit('paginateRooms',  {limit, page});  // to chat.gateway 'paginateRooms'
   }
 }
+
