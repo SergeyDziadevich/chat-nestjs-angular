@@ -50,15 +50,11 @@ export class ChatGateway
   }
 
   async handleConnection(socket: Socket) {
-    console.log('handle connection');
-
     try {
       const decodedToken = await this.authService.verifyJwt(
         socket.handshake.headers.authorization,
       );
       const user: IUser = await this.userService.getOne(decodedToken.user.id);
-
-      console.log('handle connection user: ', user);
 
       if (!user) {
         console.log('no user!!!');
@@ -100,8 +96,6 @@ export class ChatGateway
 
   @SubscribeMessage('createRoom')
   async onCreateRoom(socket: Socket, room: IRoom): Promise<IRoom> {
-    console.log('from createRoom creator :  ', socket.data.user);
-
     const createdRoom: IRoom = await this.roomService.createRoom(
       room,
       socket.data.user,

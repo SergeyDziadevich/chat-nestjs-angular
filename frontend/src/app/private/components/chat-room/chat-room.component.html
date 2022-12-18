@@ -1,10 +1,10 @@
 <div *ngIf="chatRoom; else noChatRoomSelected">
-  <div style="height: 70px;">
+  <div style="height: 90px;">
     <span style="display: flex; flex-direction: row; align-items: center; justify-content: space-between">
       <h2>{{chatRoom.name}}</h2>
       <span style="display: flex; flex-direction: row; align-items: center">
         <mat-icon>event</mat-icon>
-        <p style="margin-left: 10px">{{chatRoom.updated_at | date}}</p>
+        <span style="margin-left: 10px">{{chatRoom.updated_at | date}}</span>
       </span>
     </span>
     <span>
