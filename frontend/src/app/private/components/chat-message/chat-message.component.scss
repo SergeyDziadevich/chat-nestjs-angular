@@ -6,3 +6,12 @@ p {
   border-radius: 5px;
   margin: 7px;
 }
+
+.own-container {
+  justify-content: flex-end;
+}
+
+.own-message {
+  background-color: lightblue;
+  align-self: flex-end;
+}
