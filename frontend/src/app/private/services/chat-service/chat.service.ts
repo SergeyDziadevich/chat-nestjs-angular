@@ -14,8 +14,11 @@ export class  ChatService {
   constructor(private socket: CustomSocket, private snackbar: MatSnackBar) { }
 
   sentMessage(message: IMessage) {
-    console.log("addMessage: ", message);
     this.socket.emit('addMessage', message)
+  }
+
+  getAddedMessage(): Observable<IMessage> {
+    return this.socket.fromEvent<IMessage>('messageAdded')
   }
 
   getMessages(): Observable<IMessagePaginate> {
