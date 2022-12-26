@@ -15,10 +15,11 @@
   </div>
 </div>
 
-<div class="messages-container">
-  <span *ngFor="let message of (messages$ | async)?.items">
-    <app-chat-message [message]="message"></app-chat-message>
-  </span>
+<!-- Messages -->
+<div #messages class="messages-container">
+    <span *ngFor="let message of (messagesPaginate$ | async)?.items">
+      <app-chat-message [message]="message"></app-chat-message>
+    </span>
 </div>
 
 <!-- Add Message -->

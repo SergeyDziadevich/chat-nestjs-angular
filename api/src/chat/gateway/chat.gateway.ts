@@ -130,7 +130,7 @@ export class ChatGateway
   @SubscribeMessage('paginateRooms')
   async onPaginateRoom(socket: Socket, page: IPage) {
     const rooms = await this.roomService.getRoomsForUser(
-      socket.data.user.id,
+      socket.data?.user?.id,
       this.handleIncomingPageRequest(page),
     );
     // substract page -1 to match front mat pagination
@@ -165,16 +165,24 @@ export class ChatGateway
 
   @SubscribeMessage('addMessage')
   async onAddMessage(socket: Socket, message: IMessage) {
-    const createMessage: IMessage = await this.messageService.create({
+    console.log('gateway addMessage', message);
+
+    const createdMessage: IMessage = await this.messageService.create({
       ...message,
       user: socket.data.user,
     });
-    const room: IRoom = await this.roomService.getRoom(createMessage.room.id);
+    const room: IRoom = await this.roomService.getRoom(createdMessage.room.id);
     const joinedUsers: IJoinedRoom[] = await this.joinedRoomService.findByRoom(
       room,
     );
 
-    // TODO: Send new Message to all joined Users of the room (currently online)
+    console.log('gateway addMessage  joinedUsers', joinedUsers);
+
+    // Send new Message to all joined Users of the room (currently online)
+    for (const user of joinedUsers) {
+      console.log('gateway addMessage user', user);
+      this.server.to(user.socketId).emit('messageAdded', createdMessage);
+    }
   }
 
   private handleIncomingPageRequest(page: IPage) {
