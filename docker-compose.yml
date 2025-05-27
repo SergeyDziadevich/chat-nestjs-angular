@@ -30,9 +30,11 @@ services:
   frontend:
     build:
       dockerfile: Dockerfile
-      context: ./frontend
-      target: development
-    command: npm run start
+      context: ./
+      target: production
+    command: npx http-server dist/frontend -p 4200
+      #target: development
+    #command: npm run start
     volumes:
       - ./frontend:/dweb/frontend/src/app
       - /dweb/frontend/src/app/node_modules
@@ -60,5 +62,13 @@ services:
     ports:
       - 5050:80
 
-
-
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - api
+      - frontend
