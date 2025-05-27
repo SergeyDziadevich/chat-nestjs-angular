@@ -31,10 +31,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./
-      target: production
-    command: npx http-server dist/frontend -p 4200
-      #target: development
-    #command: npm run start
+      target: development
+    command: npm run start
     volumes:
       - ./frontend:/dweb/frontend/src/app
       - /dweb/frontend/src/app/node_modules
