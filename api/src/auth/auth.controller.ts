@@ -17,7 +17,7 @@ export class AuthController {
   async googleAuthCallback(@Req() req, @Res() res) {
     // handles the Google OAuth2 callback
     // TODO: Here, you can create the user in the DB if it doesn't exist
-    // return req.user;
+    // return req.user.email;
 
     const jwt = await this.authService.loginWithGoogle(req.user);
     return res.redirect(
