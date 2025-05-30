@@ -1,0 +1,108 @@
+[
+    {
+        "id": 1,
+        "username": "ng.com",
+        "email": "info@ng.com",
+        "role": "super-admin",
+        "password": "$2a$12$CfAAs7OhfXCahOn409U0u.PuisA7AtXWVEm5afZx18hKU2lWmKCYq1",
+        "rooms": []
+    },
+    {
+        "id": 2,
+        "username": "admin",
+        "email": "admin@ng.com",
+        "role": "admin",
+        "password": "$2a$12$t654ZfJvO0yhyR.Mf2xoFODVr.7uTgyRlE1Nxw0ta3ic0qDQhzKF21"
+    },
+    {
+        "id": 3,
+        "username": "support",
+        "email": "support@ng.com",
+        "role": "admin",
+        "password": "$2a$12$t654ZfJvO0yhyR.Mf2xoFODVr.7uTgyRlE1Nxw0ta3ic0qDQhzKF22"
+    },
+    {
+        "id": 4,
+        "username": "Jan Kowalski",
+        "email": "jan.kowalski@ng.com",
+        "role": "manager",
+        "password": "$2a$12$bKmUov52IrFhfkkqqz1qeeKRXRww.r06AHyftzvONOCa1b86mgHHW3"
+    },
+    {
+        "id": 5,
+        "username": "Alice Smith",
+        "email": "newuser@ng.com",
+        "role": "manager",
+        "password": "$2a$12$CfAAs7OhfXCahOn409U0u.PuisA7AtXWVEm5afZx18hKU2lWmKCYq4"
+    },
+    {
+        "id": 15,
+        "username": "Olivia Chen",
+        "email": "olivia.chen@ng.com",
+        "password": "$2a$12$EfG1234567890abcdefghijklmnopqrstuv5",
+        "role": "product-manager"
+    },
+    {
+        "id": 6,
+        "username": "William Brown",
+        "email": "w.brown@dweb.by",
+        "password": "$2a$12$CfAAs7OhfXCahOn409U0u.PuisA7AtXWVEm5afZx18hKU2lWmKCYq6",
+        "role": "engineer"
+    },
+    {
+        "id": 14,
+        "username": "Liam Martinez",
+        "email": "liam.martinez@ng.com",
+        "password": "$2a$12$CdE0987654321abcdefghijklmnopqrstuv7",
+        "role": "engineer"
+    },
+    {
+        "id": 7,
+        "username": "Robert Nowak",
+        "email": "testuser@ng.com",
+        "password": "$2a$12$CfAAs7OhfXCahOn409U0u.PuisA7AtXWVEm5afZx18hKU2lWmKCYq8",
+        "role": "engineer"
+    },
+    {
+        "id": 10,
+        "username": "John Doe",
+        "email": "john.doe@ng.com",
+        "password": "$2a$12$CfAAs7OhfXCahOn409U0u.PuisA7AtXWVEm5afZx18hKU2lWmKCYq9",
+        "role": "engineer"
+    },
+    {
+        "id": 8,
+        "username": "Peter Johnson",
+        "email": "peter.johnson@ng.com",
+        "password": "$2a$12$CfAAs7OhfXCahOn409U0u.PuisA7AtXWVEm5afZx18hKU2lWmKCYq10",
+        "role": "engineer"
+    },
+    {
+        "id": 9,
+        "username": "Svetlana Litvinova",
+        "email": "svetlana.litvinova@ng.com",
+        "password": "$2a$12$CfAAs7OhfXCahOn409U0u.PuisA7AtXWVEm5afZx18hKU2lWmKCYq11",
+        "role": "tester"
+    },
+    {
+        "id": 11,
+        "username": "Maria Garcia",
+        "email": "maria.garcia@ng.com",
+        "password": "$2a$12$XyZ1234567890abcdefghijklmnopqrstuv12",
+        "role": "manager"
+    },
+    {
+        "id": 12,
+        "username": "David Lee",
+        "email": "david.lee@ng.com",
+        "password": "$2a$12$YzX0987654321abcdefghijklmnopqrstuv13",
+        "role": "engineer"
+    },
+    {
+        "id": 13,
+        "username": "Emma Wilson",
+        "email": "emma.wilson@ng.com",
+        "password": "$2a$12$AbC1234567890abcdefghijklmnopqrstuv14",
+        "role": "tester"
+    }
+]

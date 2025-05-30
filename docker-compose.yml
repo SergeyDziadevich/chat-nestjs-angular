@@ -30,7 +30,7 @@ services:
   frontend:
     build:
       dockerfile: Dockerfile
-      context: ./frontend
+      context: ./
       target: development
     command: npm run start
     volumes:
@@ -59,6 +59,3 @@ services:
       PGADMIN_DEFAULT_PASSWORD: password
     ports:
       - 5050:80
-
-
-

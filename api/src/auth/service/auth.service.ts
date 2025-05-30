@@ -22,4 +22,13 @@ export class AuthService {
   verifyJwt(jwt: string): Promise<any> {
     return this.jwtService.verifyAsync(jwt);
   }
+
+  async loginWithGoogle(user: any) {
+    const payload = { email: user.email, sub: user.id };
+    const token = await this.generateJwt(payload);
+
+    return {
+      access_token: token,
+    };
+  }
 }

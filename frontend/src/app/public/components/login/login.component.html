@@ -26,6 +26,8 @@
               <button mat-button type="submit" [disabled]="!form.valid">Login</button>
             </div>
           </form>
+
+          <button mat-button (click)="loginWithGoogle()">Login with Google</button>
         </mat-card-content>
       </mat-card>
     </div>
