@@ -25,6 +25,8 @@ export class AuthController {
     // handles the Google OAuth2 callback
     // TODO: Here, you can create the user in the DB if it doesn't exist
     // return req.user.email;
+    console.log(' req.user.profile: ', req.user.profile);
+    console.log(' req.user.name: ', req.user.name);
 
     const user = await this.userRepository.findOne({
       where: { email: req.user.email },
@@ -39,11 +41,12 @@ export class AuthController {
         // TODO: Consider using a more secure method for generating passwords
       });
       await this.userRepository.save(newUser);
+      console.warn('New user Google OAuth2 created: ', newUser); // log the new user
     }
 
     const jwt = await this.authService.loginWithGoogle(req.user);
-    res.set('authorization', jwt.access_token);
-    // return 200 res.status(200).json({ access_token: jwt.access_token });
+    res.set('Authorization', jwt.access_token);
+    res.set(jwt);
 
     return res.redirect(
       `http://localhost:4200/public/login?token=${jwt.access_token}`,

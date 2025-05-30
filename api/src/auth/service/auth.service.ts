@@ -24,10 +24,11 @@ export class AuthService {
   }
 
   async loginWithGoogle(user: any) {
-    // Optionally create or update user in DB here
     const payload = { email: user.email, sub: user.id };
+    const token = await this.generateJwt(payload);
+
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: token,
     };
   }
 }
