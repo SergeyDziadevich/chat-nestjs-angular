@@ -23,33 +23,41 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   async googleAuthCallback(@Req() req, @Res() res) {
     // handles the Google OAuth2 callback
-    // TODO: Here, you can create the user in the DB if it doesn't exist
-    // return req.user.email;
-    console.log(' req.user.profile: ', req.user.profile);
-    console.log(' req.user.name: ', req.user.name);
+    console.log(' req.user: ', JSON.stringify(req.user));
 
     const user = await this.userRepository.findOne({
       where: { email: req.user.email },
     });
+    const userName = await this.userRepository.findOneBy({
+      username: req.user.name,
+    });
 
     if (!user) {
+      if (userName) {
+        console.warn(`User with this ${req.user.name} already exists.`);
+      }
       const newUser = this.userRepository.create({
-        email: req.user.email,
+        email: userName ? req.user.name : `${req.user.name}-${req.user.email}`,
         username: req.user.name,
-        password: Math.random().toString(36).slice(-8),
-        // generate a random 8-character password
         // TODO: Consider using a more secure method for generating passwords
+        password: Math.random().toString(36).slice(-8),
+        photo: req.user.picture,
       });
       await this.userRepository.save(newUser);
       console.warn('New user Google OAuth2 created: ', newUser); // log the new user
     }
 
     const jwt = await this.authService.loginWithGoogle(req.user);
-    res.set('Authorization', jwt.access_token);
-    res.set(jwt);
+    // res.set('Authorization', `Bearer ${jwt.access_token}`);
 
     return res.redirect(
-      `http://localhost:4200/public/login?token=${jwt.access_token}`,
+      `http://localhost:4200/public/login?token=${encodeURIComponent(
+        jwt.access_token,
+      )}&username=${encodeURIComponent(
+        req.user.name,
+      )}&userPicture=${encodeURIComponent(
+        req.user.photo,
+      )}&email=${encodeURIComponent(req.user.email)}`,
     );
   }
 }
