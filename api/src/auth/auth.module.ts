@@ -7,6 +7,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { PassportModule } from '@nestjs/passport';
 import { GoogleStrategy } from './strategies/google.strategy';
+import { LinkedInStrategy } from './strategies/linkedin.strategy';
 import { AuthController } from './auth.controller';
 import { UserEntity } from '../user/model/user.entity';
 
@@ -23,7 +24,13 @@ import { UserEntity } from '../user/model/user.entity';
     }),
     PassportModule.register({ defaultStrategy: 'google' }),
   ],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard, GoogleStrategy],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    JwtAuthGuard,
+    GoogleStrategy,
+    LinkedInStrategy,
+  ],
   controllers: [AuthController],
   exports: [AuthService],
 })

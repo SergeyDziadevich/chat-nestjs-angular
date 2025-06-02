@@ -52,4 +52,8 @@ export class LoginComponent implements  OnInit {
   loginWithGoogle() {
     window.location.href = 'http://localhost:3000/api/auth/google';
   }
+
+  loginWithLinkedIn() {
+    window.location.href = 'http://localhost:3000/api/auth/linkedin';
+  }
 }

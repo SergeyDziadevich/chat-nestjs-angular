@@ -39,6 +39,8 @@ export class AppModule implements NestModule {
         { path: '/api/users/login', method: RequestMethod.POST },
         { path: '/api/auth/google', method: RequestMethod.GET },
         { path: '/api/auth/google/callback', method: RequestMethod.GET },
+        { path: '/api/auth/linkedin', method: RequestMethod.GET },
+        { path: '/api/auth/linkedin/callback', method: RequestMethod.GET },
       )
       .forRoutes('');
   }
