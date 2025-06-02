@@ -27,6 +27,12 @@ export class UserEntity {
   @Column({ select: false })
   password: string;
 
+  @Column({ nullable: true })
+  photo: string;
+
+  @Column({ nullable: true })
+  role: string;
+
   @ManyToMany(() => RoomEntity, (room) => room.users)
   rooms: RoomEntity[];
 
