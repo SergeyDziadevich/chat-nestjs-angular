@@ -52,6 +52,7 @@ export class UserService {
 
         if (matches) {
           const payload: IUser = await this.findOne(foundUser.id);
+          console.log("payload", payload);
           return this.authService.generateJwt(payload);
         } else {
           throw new HttpException(

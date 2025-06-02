@@ -24,7 +24,11 @@ export class AuthService {
   }
 
   async loginWithGoogle(user: any) {
-    const payload = { email: user.email, sub: user.id };
+    const payload = {
+      email: user.email,
+      username: user.name,
+      photo: user.photo,
+    };
     const token = await this.generateJwt(payload);
 
     return {

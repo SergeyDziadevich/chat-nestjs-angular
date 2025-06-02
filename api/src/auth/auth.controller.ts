@@ -4,6 +4,7 @@ import { AuthService } from './service/auth.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../user/model/user.entity';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
 
 @Controller('auth')
 export class AuthController {
@@ -36,12 +37,15 @@ export class AuthController {
       if (userName) {
         console.warn(`User with this ${req.user.name} already exists.`);
       }
+      const generatedPassword = Math.random().toString(36).slice(-8);
+      const passwordHash = await bcrypt.hash(generatedPassword, 12);
       const newUser = this.userRepository.create({
-        email: userName ? req.user.name : `${req.user.name}-${req.user.email}`,
-        username: req.user.name,
-        // TODO: Consider using a more secure method for generating passwords
-        password: Math.random().toString(36).slice(-8),
-        photo: req.user.picture,
+        email: req.user.email,
+        username: userName
+          ? `${req.user.name}-${req.user.email}`
+          : req.user.name,
+        password: passwordHash,
+        photo: req.user.photo,
       });
       await this.userRepository.save(newUser);
       console.warn('New user Google OAuth2 created: ', newUser); // log the new user
@@ -53,11 +57,7 @@ export class AuthController {
     return res.redirect(
       `http://localhost:4200/public/login?token=${encodeURIComponent(
         jwt.access_token,
-      )}&username=${encodeURIComponent(
-        req.user.name,
-      )}&userPicture=${encodeURIComponent(
-        req.user.photo,
-      )}&email=${encodeURIComponent(req.user.email)}`,
+      )}`,
     );
   }
 }
