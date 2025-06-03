@@ -25,7 +25,7 @@ export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
 
       const user = {
         email: profile?.email,
-        name: profile?.name,
+        name: profile?.displayName,
         photo: profile?.picture,
         accessToken,
       };

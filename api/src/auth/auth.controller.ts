@@ -71,7 +71,7 @@ export class AuthController {
   @UseGuards(AuthGuard('linkedin'))
   async linkedinAuthCallback(@Req() req, @Res() res) {
     try {
-      console.log('LinkedIn callback received:', req);
+    //  console.log('LinkedIn callback received:', req);
 
       // if (!req.user || !req.user.email) {
       //   throw new Error('Invalid LinkedIn profile data');
@@ -100,6 +100,11 @@ export class AuthController {
         console.log('New user LinkedIn OAuth2 created:', newUser);
       }
 
+      console.log(
+        'LinkedIn user authenticated successfully (exist):',
+        req.user,
+      );
+      // TODO: check if user is already registered with Google
       const jwt = await this.authService.loginWithGoogle(req.user);
 
       return res.redirect(
