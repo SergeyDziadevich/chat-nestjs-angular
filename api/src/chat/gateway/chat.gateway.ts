@@ -55,6 +55,7 @@ export class ChatGateway
         socket.handshake.headers.authorization,
       );
       const user: IUser = await this.userService.getOne(decodedToken.user.id);
+      console.log('handleConnection user:', user);
 
       if (!user) {
         return this.disconnect(socket);

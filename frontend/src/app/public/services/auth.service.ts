@@ -6,17 +6,26 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { IUser } from "../../model/user.interface";
 import { ILoginResponse } from "../../model/login-response";
+import { CustomSocket } from "../../private/sockets/custom-socket";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private snackbar: MatSnackBar, private jwtService: JwtHelperService) { }
+  constructor(
+    private http: HttpClient, 
+    private snackbar: MatSnackBar, 
+    private jwtService: JwtHelperService,
+    private socket: CustomSocket
+  ) { }
 
   login(user: IUser): Observable<ILoginResponse> {
     return this.http.post<ILoginResponse>('api/users/login', user).pipe(
-      tap((res) => localStorage.setItem('nestjs_chat_app', res.access_token)),
+      tap((res) => {
+        localStorage.setItem('nestjs_chat_app', res.access_token);
+        this.socket.reconnect();
+      }),
       tap(() => this.snackbar.open(`Login successful`, 'Close',
         { duration: 3000, horizontalPosition: "right", verticalPosition: "top"}))
     )

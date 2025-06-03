@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { tap } from 'rxjs';
 
 import { AuthService } from "../../services/auth.service";
+import { CustomSocket } from "../../../private/sockets/custom-socket";
 
 @Component({
   selector: 'app-login',
@@ -24,16 +25,20 @@ export class LoginComponent implements  OnInit {
     return this.form.get('password') as FormControl;
   }
 
-  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private auth: AuthService, 
+    private router: Router, 
+    private route: ActivatedRoute,
+    private socket: CustomSocket
+  ) { }
 
   ngOnInit() {
-    // @ts-ignore
     this.route.queryParams.subscribe(params => {
       const token = params['token'];
       if (token) {
-        localStorage.setItem('nestjs_chat_app',  token)
-        // Optionally redirect to a protected page
-        this.router.navigate(['../../private/dashboard'])
+        localStorage.setItem('nestjs_chat_app', token);
+        this.socket.reconnect();
+        this.router.navigate(['../../private/dashboard']);
       }
     });
   }

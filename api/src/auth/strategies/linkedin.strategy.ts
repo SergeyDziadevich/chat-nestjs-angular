@@ -9,7 +9,8 @@ export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
       clientID: process.env.LINKEDIN_CLIENT_ID,
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/api/auth/linkedin/callback',
-      scope: ['r_emailaddress', 'r_liteprofile'],
+      scope: ['email', 'profile', 'openid'],
+      state: false,
     });
   }
 
@@ -17,15 +18,21 @@ export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
     accessToken: string,
     refreshToken: string,
     profile: any,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    done: Function,
+    done: (error: any, user?: any) => void,
   ) {
-    const user = {
-      email: profile.emails[0].value,
-      name: profile.displayName,
-      photo: profile.photos ? profile.photos[0].value : null,
-      accessToken,
-    };
-    done(null, user);
+    try {
+      console.log('LinkedIn profile:', profile);
+
+      const user = {
+        email: profile?.email,
+        name: profile?.name,
+        photo: profile?.picture,
+        accessToken,
+      };
+
+      return done(null, user);
+    } catch (error) {
+      return done(error, null);
+    }
   }
 }

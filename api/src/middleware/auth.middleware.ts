@@ -21,7 +21,7 @@ export class AuthMiddleware implements NestMiddleware {
   ) {}
 
   async use(req: RequestModel, res: Response, next: NextFunction) {
-    console.log('Request...');
+    console.log('AuthMiddleware Request...', req.method, req.url, req.path);
 
     try {
       const tokenArray: string[] = req.headers['authorization'].split(' ');

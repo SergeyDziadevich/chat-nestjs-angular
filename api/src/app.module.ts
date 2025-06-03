@@ -35,12 +35,12 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthMiddleware)
       .exclude(
-        { path: '/api/users', method: RequestMethod.POST },
-        { path: '/api/users/login', method: RequestMethod.POST },
-        { path: '/api/auth/google', method: RequestMethod.GET },
-        { path: '/api/auth/google/callback', method: RequestMethod.GET },
-        { path: '/api/auth/linkedin', method: RequestMethod.GET },
-        { path: '/api/auth/linkedin/callback', method: RequestMethod.GET },
+        { path: '/users', method: RequestMethod.POST },
+        { path: '/users/login', method: RequestMethod.POST },
+        { path: '/auth/google', method: RequestMethod.GET },
+        { path: '/auth/google/callback', method: RequestMethod.GET },
+        { path: '/auth/linkedin', method: RequestMethod.GET },
+        { path: '/auth/linkedin/callback', method: RequestMethod.GET },
       )
       .forRoutes('');
   }
