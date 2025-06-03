@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable, tap } from "rxjs";
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { Router } from "@angular/router";
 
 import { IUser } from "../../model/user.interface";
 import { ILoginResponse } from "../../model/login-response";
@@ -17,7 +18,8 @@ export class AuthService {
     private http: HttpClient, 
     private snackbar: MatSnackBar, 
     private jwtService: JwtHelperService,
-    private socket: CustomSocket
+    private socket: CustomSocket,
+    private router: Router
   ) { }
 
   login(user: IUser): Observable<ILoginResponse> {
@@ -29,6 +31,17 @@ export class AuthService {
       tap(() => this.snackbar.open(`Login successful`, 'Close',
         { duration: 3000, horizontalPosition: "right", verticalPosition: "top"}))
     )
+  }
+
+  logout() {
+    localStorage.removeItem('nestjs_chat_app');
+    this.socket.disconnect();
+    this.router.navigate(['/public/login']);
+    this.snackbar.open('Logged out successfully', 'Close', {
+      duration: 3000,
+      horizontalPosition: "right",
+      verticalPosition: "top"
+    });
   }
 
   getLoggedInUser(): IUser {

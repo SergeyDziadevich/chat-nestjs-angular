@@ -7,6 +7,9 @@
             <h2>My Chatrooms</h2>
             <small style="margin-left: 10px;">Logged in as {{user.username}}</small>
             <img *ngIf="user.photo" [src]="user.photo" alt="User Avatar" class="avatar">
+            <button mat-icon-button (click)="logout()" matTooltip="Logout">
+              <mat-icon>exit_to_app</mat-icon>
+            </button>
           </span>
           <button mat-button [routerLink]="['../', 'create-room']">Create new room</button>
         </div>
