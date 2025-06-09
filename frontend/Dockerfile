@@ -1,31 +1,32 @@
 # Stage 1 build
-FROM node:20.11.1 AS build
+FROM node:20.19.2 AS build
  #development
 
 WORKDIR /dweb/frontend
-# WORKDIR /dweb/frontend/src/app
 
+
+# Copy package files first for better layer caching
 COPY package*.json ./
 
-RUN npm install
-RUN npm install -g @angular/cli@14.2.3
+RUN npm install --force
 
+# Copy the rest of the application
 COPY . .
 
-#RUN npm run build
+## Debug - check if app.module.ts exists
+#RUN ls -la src/app/ || echo "app directory missing!"
+#
+## Create app directory if it doesn't exist
+#RUN mkdir -p src/app
 
-#EXPOSE 4200
-
-RUN npm run build --configuration production
+# Build with production configuration
+RUN npm run build:prod
 
 # Stage 2: Serve
-FROM node:20.11.1 AS production
+FROM node:20.19.2 AS production
 
 WORKDIR /dweb/frontend
 COPY --from=build /dweb/frontend/dist/frontend ./dist/frontend
 RUN npm install -g http-server
 EXPOSE 4200
 CMD ["http-server", "dist/frontend", "-p", "4200"]
-
-
-

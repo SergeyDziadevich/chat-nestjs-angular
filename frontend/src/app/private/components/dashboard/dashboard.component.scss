@@ -12,12 +12,15 @@
       overflow: auto;
       scrollbar-color: lightgrey darkgrey;
       scrollbar-width: thin;
+      padding-right: 8px;
+      margin-top: 16px;
     }
   }
 
   .chatroom {
     margin-left: 40px;
     width: 600px;
+    padding: 16px 0 0 16px;
   }
 
   .avatar {
