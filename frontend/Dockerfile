@@ -1,5 +1,5 @@
 # Stage 1 build
-FROM node:18.10.0 AS build
+FROM node:20.11.1 AS build
  #development
 
 WORKDIR /dweb/frontend
@@ -19,7 +19,7 @@ COPY . .
 RUN npm run build --configuration production
 
 # Stage 2: Serve
-FROM node:18.10.0 AS production
+FROM node:20.11.1 AS production
 
 WORKDIR /dweb/frontend
 COPY --from=build /dweb/frontend/dist/frontend ./dist/frontend
