@@ -7,7 +7,8 @@ import { AuthService } from "../../../public/services/auth.service";
 @Component({
   selector: 'app-chat-message',
   templateUrl: './chat-message.component.html',
-  styleUrls: ['./chat-message.component.scss']
+  styleUrls: ['./chat-message.component.scss'],
+  standalone: false
 })
 export class ChatMessageComponent {
   @Input() message: IMessage;

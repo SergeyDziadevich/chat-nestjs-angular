@@ -18,7 +18,8 @@ import { ChatService } from "../../services/chat-service/chat.service";
 @Component({
   selector: 'app-chat-room',
   templateUrl: './chat-room.component.html',
-  styleUrls: ['./chat-room.component.scss']
+  styleUrls: ['./chat-room.component.scss'],
+  standalone: false
 })
 export class ChatRoomComponent implements OnChanges, OnDestroy, AfterViewInit {
   @ViewChild('messages') private messagesScroller: ElementRef;
