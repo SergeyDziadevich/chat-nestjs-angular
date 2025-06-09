@@ -5,6 +5,37 @@
   mat-card {
     position: fixed;
     margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    .mat-mdc-card-content {
+      padding: 16px;
+    }
+
+    .content-row {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+    }
+
+    .header-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .room-header {
+      margin: 0;
+    }
+
+    .username-display {
+      margin-left: 16px;
+    }
+
+    .room-item {
+      padding: 8px 0;
+    }
 
     .rooms {
       height: 500px;

@@ -1,14 +1,14 @@
 <div *ngIf="chatRoom; else noChatRoomSelected">
-  <div style="height: 90px;">
-    <span style="display: flex; flex-direction: row; align-items: center; justify-content: space-between">
+  <div class="chat-header">
+    <span class="chat-title-row">
       <h2>{{chatRoom.name}}</h2>
-      <span style="display: flex; flex-direction: row; align-items: center">
+      <span class="date-container">
         <mat-icon>event</mat-icon>
-        <span style="margin-left: 10px">{{chatRoom.updated_at | date}}</span>
+        <span class="date-text">{{chatRoom.updated_at | date}}</span>
       </span>
     </span>
     <span>
-      <h3 style="color: grey">{{chatRoom.description}}</h3>
+      <h3 class="chat-description">{{chatRoom.description}}</h3>
       <span *ngFor="let user of chatRoom.users; last as isLast">
         {{user.username}}<ng-container *ngIf="!isLast">,</ng-container></span>
     </span>
@@ -23,14 +23,14 @@
 </div>
 
 <!-- Add Message -->
-<div style="position: absolute; bottom: 10px; display: flex; flex-direction: row; align-items: center; margin-left: 15px">
-  <mat-form-field style="width: 450px">
+<div class="message-input-container">
+  <mat-form-field class="message-input">
     <input matInput [formControl]="chatMessage" type="type">
   </mat-form-field>
   <button mat-button [disabled]="!chatMessage.valid" (click)="sendMessage()">
-    <span style="display: flex; flex-direction: row; align-items:  center;">
-      <mat-icon style="margin-left: 20px">send</mat-icon>
-      <p style="margin-left: 10px">Send</p>
+    <span class="send-button-content">
+      <mat-icon class="send-icon">send</mat-icon>
+      <p class="send-text">Send</p>
     </span>
   </button>
 </div>

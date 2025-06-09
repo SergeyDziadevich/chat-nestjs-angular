@@ -9,6 +9,31 @@ h3 {
   margin: 0 ;
 }
 
+.chat-header {
+  height: 90px;
+}
+
+.chat-title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.date-text {
+  margin-left: 10px;
+}
+
+.chat-description {
+  color: grey;
+}
+
 .messages-container {
   background-color: #e3e0e0;
   height: 400px;
@@ -16,6 +41,33 @@ h3 {
   scrollbar-color: lightgrey darkgrey;
   scrollbar-width: thin;
 }
+
+  .message-input-container {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 15px;
+  }
+
+  .message-input {
+  width: 450px;
+  }
+
+  .send-button-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  }
+
+  .send-icon {
+  margin-left: 20px;
+  }
+
+  .send-text {
+  margin-left: 10px;
+  }
 
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
