@@ -23,11 +23,20 @@
             <mat-hint *ngIf="!form.valid"><small>Please fill out all needed information</small></mat-hint>
 
             <div class="button">
-              <button mat-button type="submit" [disabled]="!form.valid">Login</button>
+              <button mat-button type="submit" [disabled]="!form.valid" class="login-btn">Login</button>
             </div>
           </form>
 
-          <button mat-button (click)="loginWithGoogle()">Login with Google</button>
+          <div class="social-login">
+            <button mat-button class="google-btn" (click)="loginWithGoogle()">
+              <img src="assets/google-icon.svg" alt="Google" class="social-icon">
+              Login with Google
+            </button>
+            <button mat-button class="linkedin-btn" (click)="loginWithLinkedIn()">
+              <img src="assets/linkedin-icon.svg" alt="LinkedIn" class="social-icon">
+              Login with LinkedIn
+            </button>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>

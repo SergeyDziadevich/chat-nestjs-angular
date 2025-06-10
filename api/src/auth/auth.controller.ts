@@ -60,4 +60,62 @@ export class AuthController {
       )}`,
     );
   }
+
+  @Get('linkedin')
+  @UseGuards(AuthGuard('linkedin'))
+  async linkedinAuth(@Req() req) {
+    // initiates the LinkedIn OAuth2 login flow
+  }
+
+  @Get('linkedin/callback')
+  @UseGuards(AuthGuard('linkedin'))
+  async linkedinAuthCallback(@Req() req, @Res() res) {
+    try {
+    //  console.log('LinkedIn callback received:', req);
+
+      // if (!req.user || !req.user.email) {
+      //   throw new Error('Invalid LinkedIn profile data');
+      // }
+
+      const user = await this.userRepository.findOne({
+        where: { email: req.user.email },
+      });
+      // const userName = await this.userRepository.findOneBy({
+      //   username: req.user.name,
+      // });
+
+      if (!user) {
+        // if (userName) {
+        //   console.warn(`User with username ${req.user.name} already exists.`);
+        // }
+        const generatedPassword = Math.random().toString(36).slice(-8);
+        const passwordHash = await bcrypt.hash(generatedPassword, 12);
+        const newUser = this.userRepository.create({
+          email: req.user.email,
+          username: req.user.name,
+          password: passwordHash,
+          photo: req.user.photo,
+        });
+        await this.userRepository.save(newUser);
+        console.log('New user LinkedIn OAuth2 created:', newUser);
+      }
+
+      console.log(
+        'LinkedIn user authenticated successfully (exist):',
+        req.user,
+      );
+      // TODO: check if user is already registered with Google
+      const jwt = await this.authService.loginWithGoogle(req.user);
+
+      return res.redirect(
+        `http://localhost:4200/public/login?token=${encodeURIComponent(
+          jwt.access_token,
+        )}`,
+      );
+    } catch (error) {
+      return res.redirect(
+        'http://localhost:4200/public/login?error=linkedin_auth_failed',
+      );
+    }
+  }
 }

@@ -33,7 +33,6 @@ export class ChatRoomComponent implements OnChanges, OnDestroy, AfterViewInit {
       if (message && message?.room?.id === this.chatRoom.id && !messagePaginate.items.some(m => m.id === message.id)) {
         messagePaginate.items.push(message);
       }
-      console.log("messagesPaginate$", messagePaginate.items);
       // @ts-ignore
       const items = messagePaginate.items.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
       messagePaginate.items = items;

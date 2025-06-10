@@ -10,6 +10,7 @@ import { MatInputModule    } from "@angular/material/input";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule   } from "@angular/material/autocomplete";
 import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { PrivateRoutingModule } from './private-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -39,6 +40,7 @@ import { ChatMessageComponent } from './components/chat-message/chat-message.com
     MatChipsModule,
     MatAutocompleteModule,
     MatIconModule,
+    MatTooltipModule,
   ]
 })
 export class PrivateModule { }

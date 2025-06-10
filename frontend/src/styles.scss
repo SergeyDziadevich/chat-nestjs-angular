@@ -2,3 +2,19 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mdc-button {
+  &__label {
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 5px;
+    }
+  }
+}
+
+.rooms {
+  .mdc-list-item--with-trailing-radio.mdc-list-item, .mdc-list-item--with-trailing-checkbox.mdc-list-item {
+    margin-left: 0;
+  }
+}

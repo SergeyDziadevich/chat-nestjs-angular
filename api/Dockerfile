@@ -13,7 +13,7 @@ RUN npm install
 
 # Bundle App Sources
 COPY . .
-#
+
 #RUN npm uninstall bcrypt
 #RUN npm install bcrypt
 
