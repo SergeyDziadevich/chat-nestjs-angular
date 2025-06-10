@@ -1,26 +1,80 @@
 .container {
   display: flex;
   justify-content: center;
-  margin: 100px;
-  min-width: 350px;
+  margin-top: 50px;
+  padding: 0 20px;
 
   .login {
-    margin-bottom: 20px;
+    text-align: left;
+    margin-bottom: 15px;
+    max-width: 450px;
+    width: 100%;
   }
 
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  mat-card {
+    padding: 25px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 
-    .mat-form-field {
-      width: 100%;
-      min-width: 300px;
+    mat-card-title {
+      margin-bottom: 25px;
+      font-size: 22px;
+      text-align: center;
+      font-weight: 500;
     }
 
-    .button {
-      display: flex;
-      justify-content: flex-end;
+    mat-card-content {
+      padding: 0;
+      width: 400px;
+      max-width: 100%;
+      margin: 0 auto;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 25px;
+        padding: 0 15px;
+
+        mat-form-field {
+          width: 100%;
+          margin-bottom: 18px;
+          font-size: 16px;
+        }
+
+        mat-hint, mat-error {
+          margin-bottom: 18px;
+          color: rgba(0, 0, 0, 0.6);
+          padding: 0 5px;
+        }
+
+        .button {
+          margin-top: 25px;
+          display: flex;
+          justify-content: center;
+
+          button {
+            min-width: 150px;
+            font-weight: 500;
+            padding: 10px 20px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .container mat-card {
+    padding: 20px 15px;
+    max-width: 100%;
+
+    mat-card-content {
+      form {
+        padding: 0;
+      }
     }
   }
 }

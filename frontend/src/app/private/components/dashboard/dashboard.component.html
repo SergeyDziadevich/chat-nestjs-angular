@@ -1,9 +1,9 @@
 <div class="container">
   <mat-card>
-    <div style="display: flex; flex-direction: row;">
+    <div style="display: flex; flex-direction: row; gap: 24px; padding: 15px 20px;">
       <div>
         <div>
-          <span style="display: flex; flex-direction: row; align-items: baseline">
+          <span style="display: flex; flex-direction: row; align-items: baseline; margin-bottom: 16px;">
             <h2>My Chatrooms</h2>
             <small style="margin-left: 10px;">Logged in as {{user.username}}</small>
             <img *ngIf="user.photo" [src]="user.photo" alt="User Avatar" class="avatar">

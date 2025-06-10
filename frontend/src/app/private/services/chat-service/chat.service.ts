@@ -18,11 +18,11 @@ export class  ChatService {
   }
 
   getAddedMessage(): Observable<IMessage> {
-    return this.socket.fromEvent<IMessage>('messageAdded')
+    return this.socket.fromEvent<IMessage, string>('messageAdded')
   }
 
   getMessages(): Observable<IMessagePaginate> {
-    return this.socket.fromEvent<IMessagePaginate>('messages')
+    return this.socket.fromEvent<IMessagePaginate, string>('messages')
   }
 
   joinRoom(room: IRoom) {
@@ -34,7 +34,7 @@ export class  ChatService {
   }
 
   getMyRooms(): Observable<IRoomPaginate> {
-    return this.socket.fromEvent<IRoomPaginate>('rooms')
+    return this.socket.fromEvent<IRoomPaginate, string>('rooms')
   }
 
   createRoom (room: IRoom) {

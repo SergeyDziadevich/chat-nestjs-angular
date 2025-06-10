@@ -8,7 +8,8 @@ import { ChatService } from "../../services/chat-service/chat.service";
 @Component({
   selector: 'app-create-room',
   templateUrl: './create-room.component.html',
-  styleUrls: ['./create-room.component.scss']
+  styleUrls: ['./create-room.component.scss'],
+  standalone: false
 })
 export class CreateRoomComponent {
   form: FormGroup = new FormGroup<any>({

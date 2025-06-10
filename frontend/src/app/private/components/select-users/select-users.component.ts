@@ -8,7 +8,8 @@ import { UserService } from "../../../public/services/user.service";
 @Component({
   selector: 'app-select-users',
   templateUrl: './select-users.component.html',
-  styleUrls: ['./select-users.component.scss']
+  styleUrls: ['./select-users.component.scss'],
+  standalone: false
 })
 export class SelectUsersComponent implements OnInit, OnDestroy {
   searchUsername = new FormControl();

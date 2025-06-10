@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   api:
     build:
@@ -30,12 +28,12 @@ services:
   frontend:
     build:
       dockerfile: Dockerfile
-      context: ./
-      target: development
+      context: ./frontend
+      target: build
     command: npm run start
     volumes:
-      - ./frontend:/dweb/frontend/src/app
-      - /dweb/frontend/src/app/node_modules
+      - ./frontend:/dweb/frontend
+      - /dweb/frontend/node_modules
     ports:
       - 4200:4200
     links:
