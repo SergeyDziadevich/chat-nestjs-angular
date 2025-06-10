@@ -41,6 +41,7 @@ h3 {
 .messages-container {
   background-color: #e3e0e0;
   display: flex;
+  flex-direction: column;
   height: 100%;
   overflow: auto;
   scrollbar-color: lightgrey darkgrey;
@@ -52,8 +53,18 @@ h3 {
   bottom: 10px;
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin-left: 15px;
+
+  .mdc-button {
+    margin: 10px 0 0 0;
+    display: flex;
+    align-items: center;
+
+    .mdc-button__label {
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 
 .message-input {
