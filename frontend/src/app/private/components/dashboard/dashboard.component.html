@@ -1,34 +1,38 @@
 <div class="container">
   <mat-card>
-    <div style="display: flex; flex-direction: row; gap: 24px; padding: 15px 20px;">
+    <div class="dashboard">
       <div>
         <div>
-          <span style="display: flex; flex-direction: row; align-items: baseline; margin-bottom: 16px;">
+          <span class="dashboard-header">
             <h2>My Chatrooms</h2>
-            <small style="margin-left: 10px;">Logged in as {{user.username}}</small>
+            <small>Logged in as {{user.username}}</small>
             <img *ngIf="user.photo" [src]="user.photo" alt="User Avatar" class="avatar">
-            <button mat-icon-button (click)="logout()" matTooltip="Logout">
+            <button mat-icon-button matTooltip="Logout" class="logout-btn" (click)="logout()">
               <mat-icon>exit_to_app</mat-icon>
             </button>
           </span>
           <button mat-button [routerLink]="['../', 'create-room']">Create new room</button>
         </div>
 
-        <div *ngIf="(rooms$ | async)?.items?.length; else noRooms" class="rooms">
-          <mat-selection-list [multiple]="false" (selectionChange)="onSelectRoom($event)">
-            <mat-list-option *ngFor="let room of (rooms$ | async)?.items" [value]="room">
-              Name: {{room.name}} Id: {{room.id}}
-              <mat-divider>  </mat-divider>
-            </mat-list-option>
-          </mat-selection-list>
-          <mat-paginator
-            [length]="(rooms$ | async)?.meta?.totalItems"
-            [pageIndex]="(rooms$ | async)?.meta?.currentPage"
-            [pageSize]="(rooms$ | async)?.meta?.itemsPerPage"
-            (page)="onPaginateRooms($event)"
-            [pageSizeOptions]="[10, 25, 50]">
-          </mat-paginator>
-        </div>
+        <ng-container *ngIf="rooms$ | async as roomsData;">
+          <div *ngIf="roomsData?.items?.length; else noRooms" class="rooms">
+            <mat-selection-list [multiple]="false" (selectionChange)="onSelectRoom($event)">
+              <mat-list-option *ngFor="let room of (rooms$ | async)?.items" [value]="room">
+                Name: {{room.name}} Id: {{room.id}}
+                <mat-divider>  </mat-divider>
+              </mat-list-option>
+            </mat-selection-list>
+            <mat-paginator
+              *ngIf="roomsData?.items?.length  && roomsData.items.length > 10"
+              [length]="(rooms$ | async)?.meta?.totalItems"
+              [pageIndex]="(rooms$ | async)?.meta?.currentPage"
+              [pageSize]="(rooms$ | async)?.meta?.itemsPerPage"
+              (page)="onPaginateRooms($event)"
+              [pageSizeOptions]="[10, 25, 50]">
+            </mat-paginator>
+          </div>
+        </ng-container>
+
       </div>
 
       <div class="chatroom">

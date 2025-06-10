@@ -2,6 +2,45 @@
   display: flex;
   justify-content: center;
 
+  .dashboard {
+    display: flex;
+    flex-direction: row;
+    padding: 15px 20px;
+
+    &-header {
+     display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+
+      h2 {
+        margin: 0;
+      }
+
+      .avatar {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-left: 5px;
+      }
+
+      small {
+        margin-left: 10px;
+      }
+
+      .logout-btn {
+        margin-left: 10px;
+      }
+    }
+
+    .mat-mdc-button  {
+      background-color: #e0e0e0;
+      color: #000;
+      box-shadow: none;
+    }
+  }
+
   mat-card {
     position: fixed;
     margin: 20px;
@@ -39,28 +78,27 @@
 
     .rooms {
       height: 500px;
-      width: 250px;
+      width: 100%;
       overflow: auto;
       scrollbar-color: lightgrey darkgrey;
       scrollbar-width: thin;
-      padding-right: 8px;
       margin-top: 16px;
+
+      .mdc-list-item--with-trailing-radio .mdc-list-item__end, .mdc-list-item--with-trailing-checkbox .mdc-list-item__end {
+        margin-right: 0;
+      }
     }
   }
 
   .chatroom {
-    margin-left: 40px;
     width: 600px;
-    padding: 16px 0 0 16px;
+    padding: 5px 0 0 16px;
     display: flex;
     flex-direction: column;
-  }
 
-  .avatar {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 10px;
+    h1 {
+      margin: 0 0 5px;
+    }
   }
 }
 

@@ -33,7 +33,7 @@
             <mat-error *ngIf="passwordConfirm.touched && form.hasError('passwordsNotMatching')"><small>Passwords are not matching</small></mat-error>
 
             <div class="button">
-              <button mat-button type="submit" [disabled]="!form.valid">Register</button>
+              <button mat-button type="submit" [disabled]="!form.valid" class="register-btn">Register</button>
             </div>
           </form>
         </mat-card-content>
