@@ -33,8 +33,13 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build Docker Image
+        working-directory: ./api
         run: |
-          docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
+          docker  docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+            --build-arg NODE_ENV=development \
+            --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }}
+            --build-arg DATABASE_URL=postgres://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@postgres:5432/db \
+            --build-arg PORT=3000 \
 
       - name: Push Docker Image to Amazon ECR
         run: |
