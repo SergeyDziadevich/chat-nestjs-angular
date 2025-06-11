@@ -33,12 +33,19 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         with:
           registry-type: public
+          mask-password: true
+          skip-logout: false
+        env:
+          AWS_REGION: us-east-1  # Must be us-east-1 for public ECR
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Build, tag, and push Docker image to Amazon ECR Public
         env:
           ECR_REGISTRY: public.ecr.aws/t0t4t7i2
           ECR_REPOSITORY: nestjs-ecs-cluster/chat-app
           IMAGE_TAG: ${{ github.sha }}
+          AWS_REGION: us-west-2  # application deployment region
         run: |
           # Build with ECR tag
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
