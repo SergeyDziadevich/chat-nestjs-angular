@@ -35,7 +35,7 @@ jobs:
       - name: Build Docker Image
         working-directory: ./api
         run: |
-          docker  docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
             --build-arg NODE_ENV=development \
             --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }}
             --build-arg DATABASE_URL=postgres://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@postgres:5432/db \
