@@ -59,7 +59,7 @@ jobs:
       - name: Push Docker Image to Amazon ECR
         run: |
           docker tag ${{ env.ECR_REPOSITORY }}:${{ github.sha }} ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-          docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          docker push ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
