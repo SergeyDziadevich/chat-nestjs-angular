@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t nestjs-ecs-cluster/chat-app:cff5db5cd9b34fbe5e24907af15b00f588d8b3d0 \
+          docker build -t nestjs-ecs-cluster/chat-app:${{ github.sha }} \
           --build-arg NODE_ENV=development \
           --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} \
           --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
@@ -52,6 +52,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+      - name: Tag Docker image
+        run: |
+          docker tag nestjs-ecs-cluster/chat-app:${{ github.sha }} ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
 
       - name: Push Docker Image to Amazon ECR
         run: |
