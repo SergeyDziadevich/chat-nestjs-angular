@@ -69,8 +69,8 @@ jobs:
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: tps-chat-app-td
+          task-definition: arn:aws:ecs:us-west-2:622055001988:task-definition/tps-chat-app-td:latest
+          service: nestjs-chat-service
           cluster: nestjs-ecs-cluster
           wait-for-service-stability: true
 
