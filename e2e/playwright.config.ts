@@ -15,9 +15,11 @@ export default defineConfig({
     use: {
         baseURL: 'http://localhost:4200',
         actionTimeout: 0,
+        screenshot: 'only-on-failure',
         trace: 'on-first-retry',
-        video: 'on-first-retry',
+        video: 'retain-on-failure',
     },
+    outputDir: 'test-results/',
     projects: [
         {
             name: 'chromium',
