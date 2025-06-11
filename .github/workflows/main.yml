@@ -32,14 +32,26 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build Docker Image
-        working-directory: ./api
+      - name: Build Docker image
         run: |
-          docker build -t ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-            --build-arg NODE_ENV=development \
-            --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }}
-            --build-arg DATABASE_URL=postgres://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@postgres:5432/db \
-            --build-arg PORT=3000 \
+          docker build -t nestjs-ecs-cluster/chat-app:cff5db5cd9b34fbe5e24907af15b00f588d8b3d0 \
+          --build-arg NODE_ENV=development \
+          --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} \
+          --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
+          --build-arg PORT=3000 \
+          ./api
+        shell: /usr/bin/bash -e {0}
+        env:
+          AWS_REGION: us-west-2
+          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+          ECS_SERVICE: ${{ env.ECS_SERVICE }}
+          ECS_CLUSTER: ${{ env.ECS_CLUSTER }}
+          ECS_TASK_DEFINITION: .aws/tps-chat-app-td.json
+          CONTAINER_NAME: tps-container
+          AWS_DEFAULT_REGION: us-west-2
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
       - name: Push Docker Image to Amazon ECR
         run: |
