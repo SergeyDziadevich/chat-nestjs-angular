@@ -54,5 +54,11 @@
     "karma-jasmine-html-reporter": "~2.0.0",
     "prettier": "^3.5.3",
     "typescript": "5.8.3"
+  },
+  "overrides": {
+    "ngx-socket-io": {
+      "@angular/common": "20.0.2",
+      "@angular/core": "20.0.2"
+    }
   }
 }
