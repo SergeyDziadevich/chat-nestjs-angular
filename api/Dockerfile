@@ -1,6 +1,6 @@
 # Specify Node Version and Image
 # name Image development
-FROM node:20.11-alpine AS development
+FROM node:26.7-alpine AS development
 
 # Specify Working directory inside container
 WORKDIR /dweb/src/app
@@ -26,7 +26,7 @@ EXPOSE 3000
 ################
 
 # Build another Image name production
-FROM node:20.11-alpine AS production
+FROM node:26.7-alpine AS production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
